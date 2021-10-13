@@ -20192,7 +20192,6 @@ const core = (0, tslib_1.__importStar)(__nccwpck_require__(2186));
 exports.SLACK_BOT_TOKEN = core.getInput("slack-bot-token");
 exports.TARGET_SLACK_CHANNEL_ID = core.getInput("channel-id");
 exports.GITHUB_TOKEN = core.getInput("github-token");
-// CHANNALID: C02H1MYGV0X
 
 
 /***/ }),
@@ -20232,6 +20231,7 @@ exports.sendGithubPullRequestOpenMessage = exports.sendMessage = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const web_api_1 = __nccwpck_require__(431);
 const input_1 = __nccwpck_require__(5073);
+console.log("SLACK_BOT_TOKEN", input_1.SLACK_BOT_TOKEN);
 const slackClient = new web_api_1.WebClient(input_1.SLACK_BOT_TOKEN);
 function sendMessage(args) {
     console.log("🎉", args);

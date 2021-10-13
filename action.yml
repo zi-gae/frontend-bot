@@ -1,0 +1,18 @@
+name: "Myrealtrrip Slack Notify"
+description: "마리트 내에서 사용되는 깃허브 PR 노티피케이션 액션입니다"
+branding:
+  color: blue
+  icon: at-sign
+inputs:
+  slack-bot-token:
+    description: "OAuth token for your Slack App Bot to sign requests to Slack's API with."
+    required: true
+  channel-id:
+    description: "ID of the channel or conversation in Slack you would like messages posted to."
+    required: true
+  github-token:
+    description: "Personal access token with repository rights."
+    required: true
+runs:
+  using: "node12"
+  main: "dist/index.js"

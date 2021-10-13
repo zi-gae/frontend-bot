@@ -1,0 +1,16 @@
+name: PR Slack Notification
+on: [pull_request, pull_request_review, pull_request_review_comment]
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    name: Run
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Fire Notification
+        uses: zi-gae/frontend-bot@v1.3.0
+        with:
+          slack-bot-token: ${{ secrets.LUBYCON_SLACK_BOT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel-id: C02H1MYGV0X

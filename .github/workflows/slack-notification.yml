@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Fire Notification
-        uses: zi-gae/frontend-bot@v1.1.0
+        uses: zi-gae/frontend-bot@v1.2.0
         with:
           slack-bot-token: ${{ secrets.LUBYCON_SLACK_BOT_TOKEN }}
           github-token: ${{ secrets.GH_TOKEN }}

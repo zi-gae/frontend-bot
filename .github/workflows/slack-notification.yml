@@ -12,5 +12,5 @@ jobs:
         uses: zi-gae/frontend-bot@v1.0
         with:
           slack-bot-token: ${{ secrets.LUBYCON_SLACK_BOT_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel-id: C02H1MYGV0X
+          github-token: ${{ secrets.GH_TOKEN }}
+          channel-id: ${{ secrets.CHNNAL_ID }}

@@ -8,7 +8,9 @@ const { eventName, payload } = github.context;
 async function main() {
   core.info("🔥 Run.....");
   core.info(`eventName = ${eventName}`);
+  core.info("🔥 🔥 🔥 🔥 🔥");
   core.info(`action = ${payload.action}`);
+  core.info("🔥 🔥 🔥 🔥 🔥");
 
   const pullRequest = await getPullRequest();
 

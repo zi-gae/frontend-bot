@@ -5,6 +5,8 @@ import { GithubPullRequest } from "../models/github";
 const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
 export function sendMessage(args: ChatPostMessageArguments) {
+  console.log("🎉", args);
+
   return slackClient.chat.postMessage(args);
 }
 

@@ -14,7 +14,7 @@ async function main() {
 
   const pullRequest = await getPullRequest();
 
-  core.info("Pull Request 오픈이 감지되었습니다. 슬랙 메세지를 보냅니다.");
+  core.info("Pull Request 오픈, 슬랙 메세지를 보냅니다.");
   await sendGithubPullRequestOpenMessage({ pullRequest });
 
   core.info("👋 Done!");

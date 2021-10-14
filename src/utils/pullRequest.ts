@@ -3,6 +3,7 @@ import { GithubPullRequest } from "models/github";
 
 export async function getPullRequest(): Promise<GithubPullRequest> {
   const { pull_request } = github.context.payload;
+  console.log("🎇", pull_request);
 
   return {
     title: (pull_request?.title ?? "") as string,

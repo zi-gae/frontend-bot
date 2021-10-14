@@ -20209,6 +20209,7 @@ function getPullRequest() {
     var _a, _b, _c;
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const { pull_request } = github.context.payload;
+        console.log("🎇", pull_request);
         return {
             title: ((_a = pull_request === null || pull_request === void 0 ? void 0 : pull_request.title) !== null && _a !== void 0 ? _a : ""),
             body: (_b = pull_request === null || pull_request === void 0 ? void 0 : pull_request.body) !== null && _b !== void 0 ? _b : "",

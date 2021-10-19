@@ -15,7 +15,7 @@ export async function sendCanaryPublishMessage({
 }: {
   pullRequest: GithubPullRequest;
 }) {
-  const header = ":sparkles: 다음을 통해 PR을 테스트:\n";
+  const header = ":sparkles: 다음을 통해 PR 로컬 테스트:\n";
 
   const content = canaryBodyParser(body);
   const blocks = [

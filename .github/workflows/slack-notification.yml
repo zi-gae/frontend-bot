@@ -13,5 +13,5 @@ jobs:
         with:
           build-type: canary
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          github-token: ${{ secrets.GH_TOKEN }}
-          channel-id: ${{ secrets.CHNNAL_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel-id: C02J3661S3D

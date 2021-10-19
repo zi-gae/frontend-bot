@@ -1,12 +1,11 @@
 export function canaryBodyParser(body: string) {
+  console.log("RPEV", body);
+
   const regex = /```bash.*?```/s;
-  const pars = body.match(regex);
+  const parse = body.match(regex);
 
-  console.log("PREV", pars);
+  if (!parse) return null;
 
-  const result = pars?.[0];
-  // .replace("bash", "").replaceAll("  ", "");
-  console.log("AFTER", result);
-
+  const result = parse[0].replace("bash", "").replaceAll("  ", "");
   return result;
 }

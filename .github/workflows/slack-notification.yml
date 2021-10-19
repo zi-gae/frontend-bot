@@ -11,6 +11,7 @@ jobs:
       - name: Fire Notification
         uses: zi-gae/frontend-bot@v1.0
         with:
+          build-type: canary
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           github-token: ${{ secrets.GH_TOKEN }}
           channel-id: ${{ secrets.CHNNAL_ID }}

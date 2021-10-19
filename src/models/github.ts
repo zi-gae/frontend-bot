@@ -14,3 +14,12 @@ export interface Developer {
   githubUserName: string;
   slackUserId: string;
 }
+
+export enum GithubActionEventName {
+  카나리 = "CREATED_CANARY",
+  PR승인 = "APPROVED_PULL_REQUEST",
+}
+
+export interface GithubActionEvent {
+  type: GithubActionEventName;
+}

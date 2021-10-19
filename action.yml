@@ -4,6 +4,9 @@ branding:
   color: blue
   icon: at-sign
 inputs:
+  build-type:
+    description: "Type of message Slack."
+    required: true
   slack-bot-token:
     description: "OAuth token for your Slack App Bot to sign requests to Slack's API with."
     required: true

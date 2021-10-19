@@ -8,7 +8,12 @@ import { PLANE_TEXT } from "./utils/input";
 
 const { eventName, payload } = github.context;
 
+function sleep(second: number) {
+  return new Promise((resolve) => setTimeout(resolve, second * 1000));
+}
+
 async function main() {
+  sleep(10);
   core.info("🔥 Run.....");
   core.info(`eventName = ${eventName}`);
   core.info("🔥 🔥 🔥 🔥 🔥");

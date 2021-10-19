@@ -20659,8 +20659,12 @@ const events_1 = __nccwpck_require__(4232);
 const github_1 = __nccwpck_require__(6962);
 const input_1 = __nccwpck_require__(5073);
 const { eventName, payload } = github.context;
+function sleep(second) {
+    return new Promise((resolve) => setTimeout(resolve, second * 1000));
+}
 function main() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        sleep(10);
         core.info("🔥 Run.....");
         core.info(`eventName = ${eventName}`);
         core.info("🔥 🔥 🔥 🔥 🔥");

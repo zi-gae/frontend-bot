@@ -20205,7 +20205,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.canaryBodyParser = void 0;
 function canaryBodyParser(body) {
     console.log("RPEV", body);
-    const regex = "/```bash.*?```/s";
+    const regex = /```bash.*?```/s;
     const publish = body.match(regex);
     console.log("AFTER", publish);
     return publish === null || publish === void 0 ? void 0 : publish[0];

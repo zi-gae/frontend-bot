@@ -20664,7 +20664,7 @@ function sleep(second) {
 }
 function main() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-        sleep(10);
+        yield sleep(10);
         core.info("🔥 Run.....");
         core.info(`eventName = ${eventName}`);
         core.info("🔥 🔥 🔥 🔥 🔥");

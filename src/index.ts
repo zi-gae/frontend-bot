@@ -13,7 +13,7 @@ function sleep(second: number) {
 }
 
 async function main() {
-  sleep(10);
+  await sleep(10);
   core.info("🔥 Run.....");
   core.info(`eventName = ${eventName}`);
   core.info("🔥 🔥 🔥 🔥 🔥");

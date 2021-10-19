@@ -20204,14 +20204,12 @@ var GithubActionEventName;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.canaryBodyParser = void 0;
 function canaryBodyParser(body) {
-    console.log("RPEV", body);
     const regex = /```bash.*?```/s;
-    const publish = body
-        .match(regex)?.[0]
-        .replace("bash", "")
-        .replaceAll("  ", "");
-    console.log("AFTER", publish);
-    return publish?.[0];
+    const pars = body.match(regex);
+    console.log("RPEV", pars);
+    const result = pars?.[0].replace("bash", "").replaceAll("  ", "");
+    console.log("AFTER", result);
+    return result;
 }
 exports.canaryBodyParser = canaryBodyParser;
 

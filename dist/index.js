@@ -20204,8 +20204,10 @@ var GithubActionEventName;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.canaryBodyParser = void 0;
 function canaryBodyParser(body) {
+    console.log("RPEV", body);
     const regex = "/```bash.*?```/s";
     const publish = body.match(regex);
+    console.log("AFTER", publish);
     return publish === null || publish === void 0 ? void 0 : publish[0];
 }
 exports.canaryBodyParser = canaryBodyParser;
@@ -20311,7 +20313,6 @@ const input_1 = __nccwpck_require__(5073);
 const canaryBodyParser_1 = __nccwpck_require__(116);
 const slackClient = new web_api_1.WebClient(input_1.SLACK_BOT_TOKEN);
 function sendMessage(args) {
-    console.log("🎉", args);
     return slackClient.chat.postMessage(args);
 }
 exports.sendMessage = sendMessage;

@@ -20186,12 +20186,13 @@ function wrappy (fn, cb) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GithubActionEventName = void 0;
-var GithubActionEventName;
-(function (GithubActionEventName) {
-    GithubActionEventName["\uCE74\uB098\uB9AC"] = "CREATED_CANARY";
-    GithubActionEventName["PR\uC2B9\uC778"] = "APPROVED_PULL_REQUEST";
-})(GithubActionEventName = exports.GithubActionEventName || (exports.GithubActionEventName = {}));
+exports.ActionEventName = void 0;
+var ActionEventName;
+(function (ActionEventName) {
+    ActionEventName["\uCE74\uB098\uB9AC"] = "CREATED_CANARY";
+    ActionEventName["PR\uC2B9\uC778"] = "APPROVED_PULL_REQUEST";
+    ActionEventName["\uC785\uB825"] = "INPUT_PLANE_TEXT";
+})(ActionEventName = exports.ActionEventName || (exports.ActionEventName = {}));
 
 
 /***/ }),
@@ -20232,6 +20233,8 @@ function isReadyCanaryBuild() {
     const { eventName } = github.context;
     const isPullReqeustEvent = eventName === "pull_request";
     const isReadyForCanary = input_1.BUILD_TYPE === "canary";
+    console.log("@@@@");
+    console.log(isPullReqeustEvent, isReadyForCanary);
     return isPullReqeustEvent && isReadyForCanary;
 }
 function isApprovedCodeReview() {
@@ -20244,12 +20247,17 @@ function isApprovedCodeReview() {
 function parseGithubEvent() {
     if (isReadyCanaryBuild()) {
         return {
-            type: github_1.GithubActionEventName.카나리,
+            type: github_1.ActionEventName.카나리,
         };
     }
     else if (isApprovedCodeReview()) {
         return {
-            type: github_1.GithubActionEventName.PR승인,
+            type: github_1.ActionEventName.PR승인,
+        };
+    }
+    else {
+        return {
+            type: github_1.ActionEventName.입력,
         };
     }
     return null;
@@ -20265,10 +20273,11 @@ exports.parseGithubEvent = parseGithubEvent;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GITHUB_TOKEN = exports.TARGET_SLACK_CHANNEL_ID = exports.SLACK_BOT_TOKEN = exports.BUILD_TYPE = void 0;
+exports.GITHUB_TOKEN = exports.TARGET_SLACK_CHANNEL_ID = exports.SLACK_BOT_TOKEN = exports.PLANE_TEXT = exports.BUILD_TYPE = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const core = (0, tslib_1.__importStar)(__nccwpck_require__(2186));
 exports.BUILD_TYPE = core.getInput("build-type");
+exports.PLANE_TEXT = core.getInput("plane-text");
 exports.SLACK_BOT_TOKEN = core.getInput("slack-bot-token");
 exports.TARGET_SLACK_CHANNEL_ID = core.getInput("channel-id");
 exports.GITHUB_TOKEN = core.getInput("github-token");
@@ -20308,7 +20317,7 @@ exports.getPullRequest = getPullRequest;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sendCanaryPublishMessage = exports.sendMessage = void 0;
+exports.sendPlaneTextMessage = exports.sendCanaryPublishMessage = exports.sendMessage = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const web_api_1 = __nccwpck_require__(431);
 const input_1 = __nccwpck_require__(5073);
@@ -20339,6 +20348,25 @@ function sendCanaryPublishMessage({ pullRequest: { link, title, body }, }) {
     });
 }
 exports.sendCanaryPublishMessage = sendCanaryPublishMessage;
+function sendPlaneTextMessage({ planeText, }) {
+    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        const blocks = [
+            {
+                type: "section",
+                text: {
+                    type: "mrkdwn",
+                    text: `${planeText}`,
+                },
+            },
+        ];
+        return sendMessage({
+            channel: input_1.TARGET_SLACK_CHANNEL_ID,
+            text: "",
+            blocks,
+        });
+    });
+}
+exports.sendPlaneTextMessage = sendPlaneTextMessage;
 
 
 /***/ }),
@@ -20627,6 +20655,7 @@ const slack_1 = __nccwpck_require__(806);
 const pullRequest_1 = __nccwpck_require__(7209);
 const events_1 = __nccwpck_require__(4232);
 const github_1 = __nccwpck_require__(6962);
+const input_1 = __nccwpck_require__(5073);
 const { eventName, payload } = github.context;
 function main() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
@@ -20637,19 +20666,25 @@ function main() {
         core.info("🔥 🔥 🔥 🔥 🔥");
         const pullRequest = yield (0, pullRequest_1.getPullRequest)();
         const githubEvent = (0, events_1.parseGithubEvent)();
+        const planeText = input_1.PLANE_TEXT;
         if (!githubEvent) {
             core.info("👋 타입이 없습니다.");
             return;
         }
         switch (githubEvent.type) {
-            case github_1.GithubActionEventName.카나리: {
+            case github_1.ActionEventName.카나리: {
                 core.info("카나리 배포가 되었습니다, 슬랙 메세지를 보냅니다.");
                 yield (0, slack_1.sendCanaryPublishMessage)({ pullRequest });
                 break;
             }
-            case github_1.GithubActionEventName.PR승인: {
+            case github_1.ActionEventName.PR승인: {
                 core.info("Pull Request 승인이 감지되었습니다. 슬랙 메세지를 보냅니다.");
                 yield (0, slack_1.sendCanaryPublishMessage)({ pullRequest });
+                break;
+            }
+            case github_1.ActionEventName.입력: {
+                core.info("액션에서 입력 값을 받았습니다.");
+                yield (0, slack_1.sendPlaneTextMessage)({ planeText });
                 break;
             }
         }

@@ -36,3 +36,25 @@ export async function sendCanaryPublishMessage({
     blocks,
   });
 }
+
+export async function sendPlaneTextMessage({
+  planeText,
+}: {
+  planeText: string;
+}) {
+  const blocks = [
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `${planeText}`,
+      },
+    },
+  ];
+
+  return sendMessage({
+    channel: TARGET_SLACK_CHANNEL_ID,
+    text: "",
+    blocks,
+  });
+}

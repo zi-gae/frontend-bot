@@ -15,11 +15,12 @@ export interface Developer {
   slackUserId: string;
 }
 
-export enum GithubActionEventName {
+export enum ActionEventName {
   카나리 = "CREATED_CANARY",
   PR승인 = "APPROVED_PULL_REQUEST",
+  입력 = "INPUT_PLANE_TEXT",
 }
 
 export interface GithubActionEvent {
-  type: GithubActionEventName;
+  type: ActionEventName;
 }

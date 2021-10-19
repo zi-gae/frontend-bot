@@ -20209,7 +20209,7 @@ function canaryBodyParser(body) {
     const parse = body.match(regex);
     if (!parse)
         return null;
-    const result = parse[0].replace("bash", "").replace(/"  "/gi, "");
+    const result = parse[0].replace("bash", "").replace(/  /gi, "");
     return result;
 }
 exports.canaryBodyParser = canaryBodyParser;

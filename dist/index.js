@@ -20338,7 +20338,7 @@ function sendCanaryPublishMessage({ pullRequest: { link, title, body }, }) {
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `*${header + "\n" + content + "\n"}* > <${link}|${title}> 풀리퀘스트에 카나리 배포가 되었어요!`,
+                    text: `*${header + "\n" + content + "\n"}  :point_right: <${link}|${title}> 풀리퀘스트에 카나리 배포가 되었어요!`,
                 },
             },
         ];

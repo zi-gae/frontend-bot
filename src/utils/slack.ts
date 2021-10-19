@@ -26,7 +26,7 @@ export async function sendCanaryPublishMessage({
         type: "mrkdwn",
         text: `*${
           header + "\n" + content + "\n"
-        }* > <${link}|${title}> 풀리퀘스트에 카나리 배포가 되었어요!`,
+        }  :point_right: <${link}|${title}> 풀리퀘스트에 카나리 배포가 되었어요!`,
       },
     },
   ];

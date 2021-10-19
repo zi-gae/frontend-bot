@@ -20205,9 +20205,10 @@ var ActionEventName;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.canaryBodyParser = void 0;
 function canaryBodyParser(body) {
-    console.log("RPEV", body);
+    console.log("$$$$", body);
     const regex = /```bash.*?```/s;
     const parse = body.match(regex);
+    console.log("####", parse);
     if (!parse)
         return null;
     const result = parse[0].replace("bash", "").replace(/  /gi, "");
@@ -20330,13 +20331,14 @@ exports.sendMessage = sendMessage;
 function sendCanaryPublishMessage({ pullRequest: { link, title, body }, }) {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const header = ":sparkles: 다음을 통해 PR 로컬 테스트:\n";
+        console.log("SEND", body);
         const content = (0, canaryBodyParser_1.canaryBodyParser)(body);
         const blocks = [
             {
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `*${header + "\n" + content}* > <${link}|${title}> 풀리퀘스트에 카나리 배포가 되었어요!`,
+                    text: `*${header + "\n" + content + "\n"}* > <${link}|${title}> 풀리퀘스트에 카나리 배포가 되었어요!`,
                 },
             },
         ];

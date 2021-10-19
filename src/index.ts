@@ -19,6 +19,7 @@ async function main() {
   core.info("🔥 🔥 🔥 🔥 🔥");
   core.info(`action = ${payload.action}`);
   core.info("🔥 🔥 🔥 🔥 🔥");
+  console.log("payload", payload);
 
   const pullRequest = await getPullRequest();
   const githubEvent = parseGithubEvent();

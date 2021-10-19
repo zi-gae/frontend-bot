@@ -6,6 +6,6 @@ export function canaryBodyParser(body: string) {
 
   if (!parse) return null;
 
-  const result = parse[0].replace("bash", "").replaceAll("  ", "");
+  const result = parse[0].replace("bash", "").replace(/"  "/gi, "");
   return result;
 }

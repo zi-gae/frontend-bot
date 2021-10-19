@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "outDir": "./lib",
-    "target": "es2021",
+    "target": "es2015",
     "moduleResolution": "node",
     "module": "commonjs",
     "noImplicitReturns": true,

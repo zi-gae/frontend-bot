@@ -20339,6 +20339,7 @@ function sendCanaryPublishMessage({ comment: { link }, }) {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         const header = ":sparkles: 다음을 통해 PR 로컬 테스트:\n";
         const content = (0, canaryBodyParser_1.canaryBodyParser)(dummy);
+        console.log("content", content);
         const blocks = [
             {
                 type: "section",
@@ -20672,14 +20673,14 @@ function main() {
         core.info("🔥 🔥 🔥 🔥 🔥");
         core.info(`action = ${payload.action}`);
         core.info("🔥 🔥 🔥 🔥 🔥");
-        console.log("payload", payload);
-        const comment = yield (0, getPayload_1.getPullRequest)();
+        const comment = yield (0, getPayload_1.getComment)();
         const githubEvent = (0, events_1.parseGithubEvent)();
         const planeText = input_1.PLANE_TEXT;
         if (!githubEvent) {
             core.info("👋 타입이 없습니다.");
             return;
         }
+        console.log("githubEvent.type", githubEvent.type);
         switch (githubEvent.type) {
             case github_1.ActionEventName.카나리: {
                 core.info("카나리 배포가 되었습니다, 슬랙 메세지를 보냅니다.");

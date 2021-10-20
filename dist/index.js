@@ -20232,6 +20232,7 @@ function isReadyCanaryBuild() {
     const { eventName } = github.context;
     const isPullReqeustEvent = eventName === "pull_request";
     const isReadyForCanary = input_1.BUILD_TYPE === "canary";
+    console.log(eventName, input_1.BUILD_TYPE);
     return isPullReqeustEvent && isReadyForCanary;
 }
 function isApprovedCodeReview() {

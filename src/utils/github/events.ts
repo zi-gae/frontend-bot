@@ -7,6 +7,8 @@ function isReadyCanaryBuild() {
   const isPullReqeustEvent = eventName === "pull_request";
   const isReadyForCanary = BUILD_TYPE === "canary";
 
+  console.log(eventName, BUILD_TYPE);
+
   return isPullReqeustEvent && isReadyForCanary;
 }
 

@@ -7,7 +7,6 @@ inputs:
   plane-text:
     description: "This is the plane text to be sent to Slack"
     required: false
-    default: "default plane text"
   build-type:
     description: "Type of message Slack."
     required: true

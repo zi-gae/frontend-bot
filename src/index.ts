@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { sendCanaryPublishMessage, sendPlaneTextMessage } from "./utils/slack";
-import { getPullRequest } from "./utils/github/getPayload";
+import { getComment } from "./utils/github/getPayload";
 import { parseGithubEvent } from "./utils/github/events";
 import { ActionEventName } from "./models/github";
 import { PLANE_TEXT } from "./utils/input";
@@ -16,7 +16,7 @@ async function main() {
   core.info("🔥 🔥 🔥 🔥 🔥");
   console.log("payload", payload);
 
-  const comment = await getPullRequest();
+  const comment = await getComment();
   const githubEvent = parseGithubEvent();
   const planeText = PLANE_TEXT;
 

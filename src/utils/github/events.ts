@@ -1,10 +1,10 @@
 import * as github from "@actions/github";
 import { ActionEventName } from "models/github";
-import { BUILD_TYPE } from "utils/input";
+import { BUILD_TYPE, PLANE_TEXT } from "utils/input";
 
 function isReadyCanaryBuild() {
   const { eventName } = github.context;
-  const isPullReqeustEvent = eventName === "pull_request";
+  const isPullReqeustEvent = eventName === "issue_comment";
   const isReadyForCanary = BUILD_TYPE === "canary";
 
   console.log(eventName, BUILD_TYPE);
@@ -22,6 +22,10 @@ function isApprovedCodeReview() {
   );
 }
 
+function hasPlaneText() {
+  return PLANE_TEXT;
+}
+
 export function parseGithubEvent() {
   if (isReadyCanaryBuild()) {
     return {
@@ -31,7 +35,7 @@ export function parseGithubEvent() {
     return {
       type: ActionEventName.PR승인,
     };
-  } else {
+  } else if (hasPlaneText()) {
     return {
       type: ActionEventName.입력,
     };

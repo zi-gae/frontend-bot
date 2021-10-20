@@ -20230,7 +20230,7 @@ const github_1 = __nccwpck_require__(6962);
 const input_1 = __nccwpck_require__(5073);
 function isReadyCanaryBuild() {
     const { eventName } = github.context;
-    const isPullReqeustEvent = eventName === "pull_request";
+    const isPullReqeustEvent = eventName === "issue_comment";
     const isReadyForCanary = input_1.BUILD_TYPE === "canary";
     console.log(eventName, input_1.BUILD_TYPE);
     return isPullReqeustEvent && isReadyForCanary;
@@ -20241,6 +20241,9 @@ function isApprovedCodeReview() {
     return (isReviewEvent &&
         payload.action === "submitted" &&
         payload.review.state === "approved");
+}
+function hasPlaneText() {
+    return input_1.PLANE_TEXT;
 }
 function parseGithubEvent() {
     if (isReadyCanaryBuild()) {
@@ -20253,7 +20256,7 @@ function parseGithubEvent() {
             type: github_1.ActionEventName.PR승인,
         };
     }
-    else {
+    else if (hasPlaneText()) {
         return {
             type: github_1.ActionEventName.입력,
         };

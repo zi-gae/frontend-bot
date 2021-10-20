@@ -20673,7 +20673,7 @@ function main() {
         core.info(`action = ${payload.action}`);
         core.info("🔥 🔥 🔥 🔥 🔥");
         console.log("payload", payload);
-        const comment = yield (0, getPayload_1.getComment)();
+        const comment = yield (0, getPayload_1.getPullRequest)();
         const githubEvent = (0, events_1.parseGithubEvent)();
         const planeText = input_1.PLANE_TEXT;
         if (!githubEvent) {

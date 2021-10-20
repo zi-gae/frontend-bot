@@ -14,7 +14,6 @@ async function main() {
   core.info("🔥 🔥 🔥 🔥 🔥");
   core.info(`action = ${payload.action}`);
   core.info("🔥 🔥 🔥 🔥 🔥");
-  console.log("payload", payload);
 
   const comment = await getComment();
   const githubEvent = parseGithubEvent();
@@ -24,6 +23,8 @@ async function main() {
     core.info("👋 타입이 없습니다.");
     return;
   }
+
+  console.log("githubEvent.type", githubEvent.type);
 
   switch (githubEvent.type) {
     case ActionEventName.카나리: {

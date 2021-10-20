@@ -1,3 +1,8 @@
+export interface GithubComment {
+  body: string;
+  link: string;
+}
+
 export interface GithubPullRequest {
   title: string;
   body: string;

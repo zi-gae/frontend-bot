@@ -24,7 +24,7 @@ async function main() {
     return;
   }
 
-  console.log("githubEvent.type", githubEvent.type);
+  console.log("@@comment@@", comment);
 
   switch (githubEvent.type) {
     case ActionEventName.카나리: {

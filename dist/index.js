@@ -20683,7 +20683,7 @@ function main() {
             core.info("👋 타입이 없습니다.");
             return;
         }
-        console.log("githubEvent.type", githubEvent.type);
+        console.log("@@comment@@", comment);
         switch (githubEvent.type) {
             case github_1.ActionEventName.카나리: {
                 core.info("카나리 배포가 되었습니다, 슬랙 메세지를 보냅니다.");

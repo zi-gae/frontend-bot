@@ -20487,14 +20487,6 @@ module.exports = require("buffer");
 
 /***/ }),
 
-/***/ 3129:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("child_process");
-
-/***/ }),
-
 /***/ 8614:
 /***/ ((module) => {
 
@@ -20676,38 +20668,21 @@ const getPayload_1 = __nccwpck_require__(957);
 const events_1 = __nccwpck_require__(4232);
 const github_1 = __nccwpck_require__(6962);
 const input_1 = __nccwpck_require__(5073);
-const child_process_1 = __nccwpck_require__(3129);
-function sh(cmd) {
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-        return new Promise(function (resolve, reject) {
-            (0, child_process_1.exec)(cmd, (err, stdout, stderr) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve({ stdout, stderr });
-                }
-            });
-        });
-    });
-}
+// import { exec } from "child_process";
+// async function sh(cmd: string) {
+//   return new Promise(function (resolve, reject) {
+//     exec(cmd, (err, stdout, stderr) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve({ stdout, stderr });
+//       }
+//     });
+//   });
+// }
 const { eventName, payload } = github.context;
 function main() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-        try {
-            core.info("🔥 🔥 🔥 🔥 🔥");
-            (yield sh("touch ./foo.txt"));
-            const ls = (yield sh("ls"));
-            core.info("🔥 🔥 🔥 🔥 🔥" + ls.stdout);
-        }
-        catch (error) {
-            console.log(error);
-        }
-        core.info("🔥 🔥 🔥 🔥 🔥");
-        core.info("🔥 🔥 🔥 🔥 🔥");
-        core.info("🔥 🔥 🔥 🔥 🔥");
-        core.info("🔥 🔥 🔥 🔥 🔥");
-        core.info("🔥 🔥 🔥 🔥 🔥");
         core.info("🔥 Run.....");
         core.info(`eventName = ${eventName}`);
         core.info("🔥 🔥 🔥 🔥 🔥");
@@ -20716,11 +20691,18 @@ function main() {
         const comment = yield (0, getPayload_1.getComment)();
         const githubEvent = (0, events_1.parseGithubEvent)();
         const planeText = input_1.PLANE_TEXT;
+        const { promises: fs } = __nccwpck_require__(5747);
+        let content = yield fs.readFile(planeText, "utf8");
+        core.info("🔥 🔥 🔥 🔥 🔥");
+        core.info(`content: ${content}`);
+        core.info("🔥 🔥 🔥 🔥 🔥");
         if (!githubEvent) {
             core.info("👋 타입이 없습니다.");
             return;
         }
-        console.log("@@comment@@", comment);
+        core.info("🔥 🔥 🔥 🔥 🔥");
+        console.log("@@comment@@", planeText);
+        core.info("🔥 🔥 🔥 🔥 🔥");
         switch (githubEvent.type) {
             case github_1.ActionEventName.카나리: {
                 core.info("카나리 배포가 되었습니다, 슬랙 메세지를 보냅니다.");

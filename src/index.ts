@@ -5,19 +5,19 @@ import { getComment } from "./utils/github/getPayload";
 import { parseGithubEvent } from "./utils/github/events";
 import { ActionEventName } from "./models/github";
 import { PLANE_TEXT } from "./utils/input";
-import { exec } from "child_process";
+// import { exec } from "child_process";
 
-async function sh(cmd: string) {
-  return new Promise(function (resolve, reject) {
-    exec(cmd, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve({ stdout, stderr });
-      }
-    });
-  });
-}
+// async function sh(cmd: string) {
+//   return new Promise(function (resolve, reject) {
+//     exec(cmd, (err, stdout, stderr) => {
+//       if (err) {
+//         reject(err);
+//       } else {
+//         resolve({ stdout, stderr });
+//       }
+//     });
+//   });
+// }
 
 const { eventName, payload } = github.context;
 

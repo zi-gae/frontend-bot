@@ -25,10 +25,8 @@ async function main() {
   try {
     core.info("🔥 🔥 🔥 🔥 🔥");
     (await sh("touch ./foo.txt")) as any;
-    const pwd = (await sh("pwd")) as any;
-    core.info("🔥 🔥 🔥 🔥 🔥" + String(pwd));
-    const ls = await sh("ls");
-    core.info("🔥 🔥 🔥 🔥 🔥" + String(ls));
+    const ls = (await sh("ls")) as any;
+    core.info("🔥 🔥 🔥 🔥 🔥" + ls.stdout);
   } catch (error) {
     console.log(error);
   }

@@ -20696,9 +20696,10 @@ function main() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
         try {
             core.info("🔥 🔥 🔥 🔥 🔥");
-            const pwd = (yield sh("pwd > log.txt"));
+            (yield sh("touch ./foo.txt"));
+            const pwd = (yield sh("pwd"));
             core.info("🔥 🔥 🔥 🔥 🔥" + pwd);
-            const ls = yield sh("ls > log.txt");
+            const ls = yield sh("ls");
             core.info("🔥 🔥 🔥 🔥 🔥" + ls);
         }
         catch (error) {

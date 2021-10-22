@@ -24,9 +24,10 @@ const { eventName, payload } = github.context;
 async function main() {
   try {
     core.info("🔥 🔥 🔥 🔥 🔥");
-    const pwd = (await sh("pwd > log.txt")) as any;
+    (await sh("touch ./foo.txt")) as any;
+    const pwd = (await sh("pwd")) as any;
     core.info("🔥 🔥 🔥 🔥 🔥" + pwd);
-    const ls = await sh("ls > log.txt");
+    const ls = await sh("ls");
     core.info("🔥 🔥 🔥 🔥 🔥" + ls);
   } catch (error) {
     console.log(error);

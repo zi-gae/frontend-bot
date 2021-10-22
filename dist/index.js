@@ -20698,9 +20698,9 @@ function main() {
             core.info("🔥 🔥 🔥 🔥 🔥");
             (yield sh("touch ./foo.txt"));
             const pwd = (yield sh("pwd"));
-            core.info("🔥 🔥 🔥 🔥 🔥" + pwd);
+            core.info("🔥 🔥 🔥 🔥 🔥" + String(pwd));
             const ls = yield sh("ls");
-            core.info("🔥 🔥 🔥 🔥 🔥" + ls);
+            core.info("🔥 🔥 🔥 🔥 🔥" + String(ls));
         }
         catch (error) {
             console.log(error);

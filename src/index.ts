@@ -22,20 +22,6 @@ async function sh(cmd: string) {
 const { eventName, payload } = github.context;
 
 async function main() {
-  try {
-    core.info("🔥 🔥 🔥 🔥 🔥");
-    (await sh("touch ./foo.txt")) as any;
-    const ls = (await sh("ls")) as any;
-    core.info("🔥 🔥 🔥 🔥 🔥" + ls.stdout);
-  } catch (error) {
-    console.log(error);
-  }
-  core.info("🔥 🔥 🔥 🔥 🔥");
-  core.info("🔥 🔥 🔥 🔥 🔥");
-  core.info("🔥 🔥 🔥 🔥 🔥");
-  core.info("🔥 🔥 🔥 🔥 🔥");
-  core.info("🔥 🔥 🔥 🔥 🔥");
-
   core.info("🔥 Run.....");
   core.info(`eventName = ${eventName}`);
   core.info("🔥 🔥 🔥 🔥 🔥");
@@ -50,8 +36,9 @@ async function main() {
     core.info("👋 타입이 없습니다.");
     return;
   }
-
-  console.log("@@comment@@", comment);
+  core.info("🔥 🔥 🔥 🔥 🔥");
+  console.log("@@comment@@", planeText);
+  core.info("🔥 🔥 🔥 🔥 🔥");
 
   switch (githubEvent.type) {
     case ActionEventName.카나리: {

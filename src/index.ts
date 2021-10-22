@@ -24,10 +24,10 @@ const { eventName, payload } = github.context;
 async function main() {
   try {
     core.info("🔥 🔥 🔥 🔥 🔥");
-    (await sh("pwd > log.txt")) as any;
-    core.info("🔥 🔥 🔥 🔥 🔥");
-    await sh("ls > log.txt");
-    core.info("🔥 🔥 🔥 🔥 🔥");
+    const pwd = (await sh("pwd > log.txt")) as any;
+    core.info("🔥 🔥 🔥 🔥 🔥" + pwd);
+    const ls = await sh("ls > log.txt");
+    core.info("🔥 🔥 🔥 🔥 🔥" + ls);
   } catch (error) {
     console.log(error);
   }

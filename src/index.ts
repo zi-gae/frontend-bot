@@ -5,10 +5,38 @@ import { getComment } from "./utils/github/getPayload";
 import { parseGithubEvent } from "./utils/github/events";
 import { ActionEventName } from "./models/github";
 import { PLANE_TEXT } from "./utils/input";
+import { exec } from "child_process";
+
+async function sh(cmd: string) {
+  return new Promise(function (resolve, reject) {
+    exec(cmd, (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({ stdout, stderr });
+      }
+    });
+  });
+}
 
 const { eventName, payload } = github.context;
 
 async function main() {
+  try {
+    core.info("🔥 🔥 🔥 🔥 🔥");
+    (await sh("pwd > log.txt")) as any;
+    core.info("🔥 🔥 🔥 🔥 🔥");
+    await sh("ls > log.txt");
+    core.info("🔥 🔥 🔥 🔥 🔥");
+  } catch (error) {
+    console.log(error);
+  }
+  core.info("🔥 🔥 🔥 🔥 🔥");
+  core.info("🔥 🔥 🔥 🔥 🔥");
+  core.info("🔥 🔥 🔥 🔥 🔥");
+  core.info("🔥 🔥 🔥 🔥 🔥");
+  core.info("🔥 🔥 🔥 🔥 🔥");
+
   core.info("🔥 Run.....");
   core.info(`eventName = ${eventName}`);
   core.info("🔥 🔥 🔥 🔥 🔥");

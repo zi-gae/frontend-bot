@@ -31,6 +31,12 @@ async function main() {
   const comment = await getComment();
   const githubEvent = parseGithubEvent();
   const planeText = PLANE_TEXT;
+  const { promises: fs } = require("fs");
+
+  let content = await fs.readFile(planeText, "utf8");
+  core.info("🔥 🔥 🔥 🔥 🔥");
+  core.info(`content: ${content}`);
+  core.info("🔥 🔥 🔥 🔥 🔥");
 
   if (!githubEvent) {
     core.info("👋 타입이 없습니다.");

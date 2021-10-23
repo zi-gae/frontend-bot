@@ -20197,26 +20197,6 @@ var ActionEventName;
 
 /***/ }),
 
-/***/ 116:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.canaryBodyParser = void 0;
-function canaryBodyParser(body) {
-    const regex = /```bash.*?```/s;
-    const parse = body.match(regex);
-    if (!parse)
-        return null;
-    const result = parse[0].replace("bash", "").replace(/  /gi, "");
-    return result;
-}
-exports.canaryBodyParser = canaryBodyParser;
-
-
-/***/ }),
-
 /***/ 4232:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -20229,11 +20209,8 @@ const github = (0, tslib_1.__importStar)(__nccwpck_require__(5438));
 const github_1 = __nccwpck_require__(6962);
 const input_1 = __nccwpck_require__(5073);
 function isReadyCanaryBuild() {
-    const { eventName } = github.context;
-    const isPullReqeustEvent = eventName === "issue_comment";
     const isReadyForCanary = input_1.BUILD_TYPE === "canary";
-    console.log(eventName, input_1.BUILD_TYPE);
-    return isPullReqeustEvent && isReadyForCanary;
+    return isReadyForCanary;
 }
 function isApprovedCodeReview() {
     const { eventName, payload } = github.context;
@@ -20243,7 +20220,7 @@ function isApprovedCodeReview() {
         payload.review.state === "approved");
 }
 function hasPlaneText() {
-    return input_1.PLANE_TEXT;
+    return input_1.PLANE_TEXT && !input_1.BUILD_TYPE;
 }
 function parseGithubEvent() {
     if (isReadyCanaryBuild()) {
@@ -20268,42 +20245,6 @@ exports.parseGithubEvent = parseGithubEvent;
 
 /***/ }),
 
-/***/ 957:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getComment = exports.getPullRequest = void 0;
-const tslib_1 = __nccwpck_require__(4351);
-const github = (0, tslib_1.__importStar)(__nccwpck_require__(5438));
-function getPullRequest() {
-    var _a, _b, _c;
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-        const { pull_request } = github.context.payload;
-        return {
-            title: ((_a = pull_request === null || pull_request === void 0 ? void 0 : pull_request.title) !== null && _a !== void 0 ? _a : ""),
-            body: (_b = pull_request === null || pull_request === void 0 ? void 0 : pull_request.body) !== null && _b !== void 0 ? _b : "",
-            link: ((_c = pull_request === null || pull_request === void 0 ? void 0 : pull_request._links.html.href) !== null && _c !== void 0 ? _c : ""),
-        };
-    });
-}
-exports.getPullRequest = getPullRequest;
-function getComment() {
-    var _a, _b;
-    return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-        const { comment } = github.context.payload;
-        return {
-            body: (_a = comment === null || comment === void 0 ? void 0 : comment.body) !== null && _a !== void 0 ? _a : "",
-            link: ((_b = comment === null || comment === void 0 ? void 0 : comment.html_url) !== null && _b !== void 0 ? _b : ""),
-        };
-    });
-}
-exports.getComment = getComment;
-
-
-/***/ }),
-
 /***/ 5073:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -20322,6 +20263,39 @@ exports.GITHUB_TOKEN = core.getInput("github-token");
 
 /***/ }),
 
+/***/ 4226:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseCanaryVersion = void 0;
+const PACKAGE_NAME = "@myrealtrip/design-system";
+function findStringLastIndex(string, match) {
+    return string.indexOf(match) + match.length;
+}
+function parseCanaryVersion(body) {
+    const regex = /Published.*?Done/s;
+    const parse = body.match(regex);
+    if (!parse)
+        return null;
+    const matchString = {
+        start: "version: ",
+        end: " Done",
+    };
+    // 26 ~ 51
+    const versionNote = parse[0];
+    const startIndex = findStringLastIndex(versionNote, matchString.start);
+    const endIndex = findStringLastIndex(versionNote, matchString.end) - startIndex;
+    const version = versionNote.substr(startIndex, endIndex);
+    const markdown = `\`\`\`sh npm install ${PACKAGE_NAME}@${version}\n\n yarn add ${PACKAGE_NAME}@${version}\`\`\``;
+    return markdown;
+}
+exports.parseCanaryVersion = parseCanaryVersion;
+
+
+/***/ }),
+
 /***/ 806:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -20332,23 +20306,23 @@ exports.sendPlaneTextMessage = exports.sendCanaryPublishMessage = exports.sendMe
 const tslib_1 = __nccwpck_require__(4351);
 const web_api_1 = __nccwpck_require__(431);
 const input_1 = __nccwpck_require__(5073);
-const canaryBodyParser_1 = __nccwpck_require__(116);
+const parseCanaryVersion_1 = __nccwpck_require__(4226);
 const slackClient = new web_api_1.WebClient(input_1.SLACK_BOT_TOKEN);
 function sendMessage(args) {
     return slackClient.chat.postMessage(args);
 }
 exports.sendMessage = sendMessage;
-function sendCanaryPublishMessage({ comment: { link, body }, }) {
+function sendCanaryPublishMessage(planeText) {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
-        const header = ":sparkles: 다음을 통해 PR 로컬 테스트:\n";
-        const content = (0, canaryBodyParser_1.canaryBodyParser)(body);
+        const header = ":sparkles: 다음을 통해 로컬 테스트:\n";
+        const content = (0, parseCanaryVersion_1.parseCanaryVersion)(planeText);
         console.log("content", content);
         const blocks = [
             {
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `*${header + "\n" + content + "\n"}  :point_right: <${link}|Link> 풀리퀘스트에 카나리 배포가 되었어요!`,
+                    text: `*${header + "\n" + content + "\n"}  :point_right: 카나리 배포가 되었어요!`,
                 },
             },
         ];
@@ -20664,22 +20638,9 @@ const tslib_1 = __nccwpck_require__(4351);
 const core = (0, tslib_1.__importStar)(__nccwpck_require__(2186));
 const github = (0, tslib_1.__importStar)(__nccwpck_require__(5438));
 const slack_1 = __nccwpck_require__(806);
-const getPayload_1 = __nccwpck_require__(957);
 const events_1 = __nccwpck_require__(4232);
 const github_1 = __nccwpck_require__(6962);
 const input_1 = __nccwpck_require__(5073);
-// import { exec } from "child_process";
-// async function sh(cmd: string) {
-//   return new Promise(function (resolve, reject) {
-//     exec(cmd, (err, stdout, stderr) => {
-//       if (err) {
-//         reject(err);
-//       } else {
-//         resolve({ stdout, stderr });
-//       }
-//     });
-//   });
-// }
 const { eventName, payload } = github.context;
 function main() {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
@@ -20688,23 +20649,16 @@ function main() {
         core.info("🔥 🔥 🔥 🔥 🔥");
         core.info(`action = ${payload.action}`);
         core.info("🔥 🔥 🔥 🔥 🔥");
-        const comment = yield (0, getPayload_1.getComment)();
         const githubEvent = (0, events_1.parseGithubEvent)();
         const planeText = input_1.PLANE_TEXT;
-        core.info("🔥 🔥 🔥 🔥 🔥");
-        core.info(`content: ${planeText}`);
-        core.info("🔥 🔥 🔥 🔥 🔥");
         if (!githubEvent) {
             core.info("👋 타입이 없습니다.");
             return;
         }
-        core.info("🔥 🔥 🔥 🔥 🔥");
-        console.log("@@comment@@", planeText);
-        core.info("🔥 🔥 🔥 🔥 🔥");
         switch (githubEvent.type) {
             case github_1.ActionEventName.카나리: {
                 core.info("카나리 배포가 되었습니다, 슬랙 메세지를 보냅니다.");
-                yield (0, slack_1.sendCanaryPublishMessage)({ comment });
+                yield (0, slack_1.sendCanaryPublishMessage)(planeText);
                 break;
             }
             case github_1.ActionEventName.PR승인: {

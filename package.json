@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node ./src/index.ts",
     "build": "ncc build --source-map",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "push": "yarn build && git add . && git commit -m 'ci: test' && git push origin master"
   },
   "author": "",
   "license": "ISC",

@@ -20691,10 +20691,8 @@ function main() {
         const comment = yield (0, getPayload_1.getComment)();
         const githubEvent = (0, events_1.parseGithubEvent)();
         const planeText = input_1.PLANE_TEXT;
-        const { promises: fs } = __nccwpck_require__(5747);
-        let content = yield fs.readFile(planeText, "utf8");
         core.info("🔥 🔥 🔥 🔥 🔥");
-        core.info(`content: ${content}`);
+        core.info(`content: ${planeText}`);
         core.info("🔥 🔥 🔥 🔥 🔥");
         if (!githubEvent) {
             core.info("👋 타입이 없습니다.");

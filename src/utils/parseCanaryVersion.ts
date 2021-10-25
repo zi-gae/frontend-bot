@@ -7,7 +7,7 @@ function findStringLastIndex(string: string, match: string) {
 export function parseCanaryVersion(body: string) {
   const regex = /Published.*?Done/s;
   const parse = body.match(regex);
-  if (!parse) return null;
+  if (!parse) return "Failed Parse";
 
   const matchString = {
     start: "version: ",

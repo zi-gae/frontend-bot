@@ -20278,7 +20278,7 @@ function parseCanaryVersion(body) {
     const regex = /Published.*?Done/s;
     const parse = body.match(regex);
     if (!parse)
-        return null;
+        return "Failed Parse";
     const matchString = {
         start: "version: ",
         end: " Done",

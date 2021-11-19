@@ -20336,12 +20336,13 @@ function sendCanaryPublishMessage(planeText) {
 exports.sendCanaryPublishMessage = sendCanaryPublishMessage;
 function sendPlaneTextMessage({ planeText, }) {
     return (0, tslib_1.__awaiter)(this, void 0, void 0, function* () {
+        const parse = planeText.replace(/\\n/gi, "\n");
         const blocks = [
             {
                 type: "section",
                 text: {
                     type: "mrkdwn",
-                    text: `${planeText}`,
+                    text: `${parse}`,
                 },
             },
         ];

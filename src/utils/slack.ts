@@ -38,12 +38,14 @@ export async function sendPlaneTextMessage({
 }: {
   planeText: string;
 }) {
+  const parse = planeText.replace(/\\n/gi, "\n");
+
   const blocks = [
     {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `${planeText}`,
+        text: `${parse}`,
       },
     },
   ];

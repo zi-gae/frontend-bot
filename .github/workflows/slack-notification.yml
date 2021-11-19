@@ -11,9 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Fire Notification
-        uses: zi-gae/frontend-bot@v1.9.20
+        uses: zi-gae/frontend-bot@v1.10.0
         with:
-          plane-text: HELLO  WROLD  TEST
+          plane-text: HELLO  WROLD  TEST \n TEST `REACT`
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           github-token: ${{ secrets.GH_TOKEN }}
           channel-id: ${{ secrets.CHNNAL_ID }}
